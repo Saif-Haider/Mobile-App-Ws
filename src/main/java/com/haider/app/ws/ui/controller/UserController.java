@@ -18,6 +18,7 @@ import com.haider.app.ws.ui.model.response.UserRest;
 @RestController
 @RequestMapping("users")
 public class UserController {
+	
 	@Autowired
 	UserService userService;
 	@GetMapping
