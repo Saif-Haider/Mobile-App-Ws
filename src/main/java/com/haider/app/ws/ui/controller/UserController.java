@@ -28,7 +28,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails)
+	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws RuntimeException
 	{    
 		UserRest returnValue = new UserRest();
 		UserDto userDto = new UserDto();
