@@ -1,0 +1,11 @@
+MobileAppWsApplication = SpringBoot start application
+UserEntity = Entity to save in Db
+UserService = For various services and used between different layer
+UserServiceImpl = Implementation of UserService Interface
+Utils = Contains utility function such as generating userid
+UserDto = Data transfer object conversion in request & response
+UserDetailsRequestModel = For Request JSON 
+UserRest = For Response JSON
+UserController = Main controller for api
+WebSecurity = Editing Security configuration
+UserRepository = From CRUD operation
