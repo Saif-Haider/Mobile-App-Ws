@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.haider.app.ws.UserRepository;
 import com.haider.app.ws.io.entity.UserEntity;
+import com.haider.app.ws.io.repositories.UserRepository;
 import com.haider.app.ws.service.UserService;
 import com.haider.app.ws.shared.Utils;
 import com.haider.app.ws.shared.dto.UserDto;
@@ -60,6 +60,23 @@ public class UserServiceImpl implements UserService {
 			 throw new UsernameNotFoundException(email);
 		}
 		return new User(userEntity.getEmail(),userEntity.getEncryptedPassword(),new ArrayList<>());
+	}
+ 
+	
+	// TO FIND USER BY MAIL AND RETURN IT
+
+	@Override
+	public UserDto getUser(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		if(userEntity == null) {
+			 throw new UsernameNotFoundException(email);
+		}
+		
+		UserDto returnValue = new UserDto();
+		BeanUtils.copyProperties(userEntity, returnValue);
+
+		return returnValue;
+		
 	}
 
 }

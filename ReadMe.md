@@ -9,3 +9,6 @@ UserRest = For Response JSON
 UserController = Main controller for api
 WebSecurity = Editing Security configuration
 UserRepository = From CRUD operation
+SpringApplicationContext = some classes which aren't bean cannot access other through autowiring so we need context initilization	 
+SecurityConstants = Contains constant
+AuthenticationFilter = Used to generate authentication token when user sign in					   
