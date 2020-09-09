@@ -1,6 +1,8 @@
 package com.haider.app.ws.exceptions;
 
 // Custom class to throw exception
+// As it's custom so now we can return Custom Json to client  
+// unlike a normal exception 
 
 public class UserServiceException extends RuntimeException {
 
