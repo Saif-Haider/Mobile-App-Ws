@@ -2,6 +2,7 @@ package com.haider.app.ws.ui.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,17 +23,21 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-
-	@GetMapping(path = "/{id}")
+    
+	// Path variable {id} is read so as to get the user
+	
+	@GetMapping(path = "/{id}",
+			produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 	public UserRest getUser(@PathVariable String id) {
 		UserRest returnValue = new UserRest();
-		
+
 		UserDto userDto = userService.getUserByUserId(id);
 		BeanUtils.copyProperties(userDto, returnValue);
 		return returnValue;
 	}
 
-	@PostMapping
+	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE},
+			produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws RuntimeException {
 		UserRest returnValue = new UserRest();
 		UserDto userDto = new UserDto();
