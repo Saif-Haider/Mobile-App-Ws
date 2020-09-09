@@ -1,5 +1,6 @@
 package com.haider.app.ws.ui.model.response;
 
+// Custom class for status operation
 public class OperationStatusModel {
 	private String operationResult;
 	private String operationName;
