@@ -5,13 +5,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 // used to read properties from application.properties file
-@Component
+@Component("AppProperties")
 public class AppProperties {
 	@Autowired
 	private Environment environment;
 
-	public String getTokenSecret() {
+	public String  getTokenSecret() {
 		return environment.getProperty("tokenSecret");
 	}
+
+	
 
 }

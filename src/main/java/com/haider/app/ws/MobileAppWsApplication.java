@@ -20,8 +20,14 @@ public class MobileAppWsApplication {
 	}
     
 	// Need a bean so otherwise CONTEXT won't be initialized by spring
-	@Bean
-	public SpringApplicationContext springApplicationContext() {
-		return new SpringApplicationContext();
-	}
+//	@Bean
+//	public SpringApplicationContext springApplicationContext() {
+//		return new SpringApplicationContext();
+//	}
+	
+//	@Bean(name ="AppProperties")
+//	public AppProperties appProperties() {
+//		return new AppProperties();
+//	}
 }
+
