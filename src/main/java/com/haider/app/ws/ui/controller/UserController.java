@@ -17,6 +17,9 @@ import com.haider.app.ws.service.UserService;
 import com.haider.app.ws.shared.dto.UserDto;
 import com.haider.app.ws.ui.model.request.UserDetailsRequestModel;
 import com.haider.app.ws.ui.model.response.ErrorMessages;
+import com.haider.app.ws.ui.model.response.OperationStatusModel;
+import com.haider.app.ws.ui.model.response.RequestOperationName;
+import com.haider.app.ws.ui.model.response.RequestOperationStatus;
 import com.haider.app.ws.ui.model.response.UserRest;
 
 @RestController
@@ -59,8 +62,8 @@ public class UserController {
 	
 	
 	@PutMapping(path = "/{id}",
-			consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, produces = {
-			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
+			consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
+			produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
 			)
 	public UserRest updateUser(@PathVariable String id,@RequestBody UserDetailsRequestModel userDetails) {
 		UserRest returnValue = new UserRest();
@@ -72,9 +75,15 @@ public class UserController {
 		return returnValue;
 	}
 
-	@DeleteMapping
-	public String deleteUser() {
-		return "delete user was called";
+	@DeleteMapping(path = "/{id}",
+			produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
+			)
+	public OperationStatusModel deleteUser(@PathVariable String id) {
+		OperationStatusModel returnValue = new OperationStatusModel();
+		returnValue.setOperationName(RequestOperationName.DELETE.name());
+		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		
+		return returnValue;
 	}
 
 }
