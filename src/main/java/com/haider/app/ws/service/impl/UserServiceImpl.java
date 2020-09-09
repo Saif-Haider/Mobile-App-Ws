@@ -10,11 +10,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.haider.app.ws.exceptions.UserServiceException;
 import com.haider.app.ws.io.entity.UserEntity;
 import com.haider.app.ws.io.repositories.UserRepository;
 import com.haider.app.ws.service.UserService;
 import com.haider.app.ws.shared.Utils;
 import com.haider.app.ws.shared.dto.UserDto;
+import com.haider.app.ws.ui.model.response.ErrorMessages;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -77,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUserByUserId(String id) {
-		// TODO Auto-generated method stub
+		
 		UserEntity userEntity = userRepository.findByUserId(id);
 		if (userEntity == null) {
 			throw new UsernameNotFoundException(id);
@@ -88,6 +90,22 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto userDto) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+		
+		if (userEntity == null) {
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		userEntity.setFirstName(userDto.getFirstName());
+		userEntity.setLastName(userDto.getLastName());
+		
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
+		return returnValue;
 	}
 
 }

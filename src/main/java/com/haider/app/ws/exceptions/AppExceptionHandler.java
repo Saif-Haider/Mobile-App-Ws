@@ -17,13 +17,16 @@ import com.haider.app.ws.ui.model.response.ErrorMessage;
 
 @ControllerAdvice
 public class AppExceptionHandler {
+	
+	// Handle Specific UserServiceException  
+	
 	@ExceptionHandler(value = { UserServiceException.class })
 	public ResponseEntity<Object> handleUserServiceException(UserServiceException ex, WebRequest request) {
 
 		ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+    // Handle other Exception 
 	@ExceptionHandler(value = { Exception.class })
 	public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
 
