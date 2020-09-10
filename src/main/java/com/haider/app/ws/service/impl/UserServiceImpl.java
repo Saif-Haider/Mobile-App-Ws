@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +22,6 @@ import com.haider.app.ws.service.UserService;
 import com.haider.app.ws.shared.Utils;
 import com.haider.app.ws.shared.dto.UserDto;
 import com.haider.app.ws.ui.model.response.ErrorMessages;
-import com.haider.app.ws.ui.model.response.UserRest;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -127,10 +125,14 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(userEntity);
 	}
    // method to return list of users
-	// using findAll pagable  it returns a Page
+   // using findAll pagable  it returns a Page
 	@Override
 	public List<UserDto> getUsers(int page, int limit) {
 		List<UserDto> returnValue = new ArrayList<>();
+		
+		if(page>0) {
+			page--;
+		}
 		
 		Pageable pageable = PageRequest.of(page, limit);
 		Page<UserEntity> usersPage  = userRepository.findAll(pageable );
