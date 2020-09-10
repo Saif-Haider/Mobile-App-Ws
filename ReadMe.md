@@ -25,4 +25,8 @@
 ## SecurityConstants 
  Contains constant
 ## AuthenticationFilter 
- Used to generate authentication token when user sign in					   
+ Used to generate authentication token when user sign in
+## ErrorMessage
+ Class for returning error 
+## ErrorMessages
+ Enum for different types of error messages
