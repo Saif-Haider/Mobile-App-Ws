@@ -12,6 +12,7 @@
 	<groupId>com.haider.app.ws</groupId>
 	<artifactId>mobile-app-ws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>mobile-app-ws</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -49,6 +50,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
