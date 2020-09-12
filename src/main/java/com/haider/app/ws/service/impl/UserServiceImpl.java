@@ -4,6 +4,7 @@ package com.haider.app.ws.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import com.haider.app.ws.io.entity.UserEntity;
 import com.haider.app.ws.io.repositories.UserRepository;
 import com.haider.app.ws.service.UserService;
 import com.haider.app.ws.shared.Utils;
+import com.haider.app.ws.shared.dto.AddressDto;
 import com.haider.app.ws.shared.dto.UserDto;
 import com.haider.app.ws.ui.model.response.ErrorMessages;
 
@@ -40,8 +42,22 @@ public class UserServiceImpl implements UserService {
 
 		if (userRepository.findByEmail(user.getEmail()) != null) // IF RECORD ALREADY EXIST THEN THROW EXCEPTION
 			throw new RuntimeException("Record already exists");
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(user, userEntity);
+//		 = new UserEntity();
+//		BeanUtils.copyProperties(user, userEntity);
+		
+		// Loop to set address dto in user dto and userdto in address dto
+		// return list return a reference to the list so it can be changed by getAddresses
+		for(int i=0;i<user.getAddresses().size();i++) {
+			AddressDto addressDto = user.getAddresses().get(i);
+			addressDto.setUserDetails(user);
+			addressDto.setAddressId(utils.generateAddressId(30));
+			user.getAddresses().set(i, addressDto);
+		}
+		
+		
+		
+		ModelMapper modelMapper = new ModelMapper();
+		UserEntity userEntity =  modelMapper.map(user, UserEntity.class);
 
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword())); // ENCRYPT PASSWORD
@@ -49,8 +65,8 @@ public class UserServiceImpl implements UserService {
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
-		UserDto returnValue = new UserDto();
-		BeanUtils.copyProperties(storedUserDetails, returnValue);
+		UserDto returnValue = modelMapper.map(storedUserDetails, UserDto.class);
+	// BeanUtils.copyProperties(storedUserDetails, returnValue);
 
 		return returnValue;
 	}

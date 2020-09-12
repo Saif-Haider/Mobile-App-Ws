@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
 public class MobileAppWsApplication /* extends SpringBootServletInitializer */{
 
-	// Added to create a war
+//  Added to create a war
 //	@Override
 //	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 //		return builder.sources(MobileAppWsApplication.class);
@@ -20,6 +20,7 @@ public class MobileAppWsApplication /* extends SpringBootServletInitializer */{
 		SpringApplication.run(MobileAppWsApplication.class, args);
 	}
 
+	
 	// CREATING BEAN FOR AUTOWIRING
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

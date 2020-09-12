@@ -41,7 +41,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		}
 
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
-		// here if we get autherization will fail
+		// here if we get null autherization will fail
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		chain.doFilter(req, res);
