@@ -5,5 +5,7 @@ import java.util.List;
 import com.haider.app.ws.shared.dto.AddressDto;;
 
 public interface AddressService {
-	List<AddressDto> getAddress(String userId);
+	List<AddressDto> getAddresses(String userId);
+
+	AddressDto getAddress(String addressId);
 }

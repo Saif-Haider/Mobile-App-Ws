@@ -11,6 +11,8 @@ public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
 
 	Iterable<AddressEntity> findAllByUserDetails(UserEntity userEntity);
 
+	AddressEntity findByAddressId(String addressId);
+
 	
 
 }
