@@ -1,9 +1,11 @@
 package com.haider.app.ws.ui.controller;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haider.app.ws.exceptions.UserServiceException;
+import com.haider.app.ws.service.AddressService;
 import com.haider.app.ws.service.UserService;
+import com.haider.app.ws.shared.dto.AddressDto;
 import com.haider.app.ws.shared.dto.UserDto;
 import com.haider.app.ws.ui.model.request.UserDetailsRequestModel;
 import com.haider.app.ws.ui.model.response.AddressesRest;
@@ -34,6 +38,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	AddressService addressesService;
 
 	// Path variable {id} is read so as to get the user
 
@@ -92,7 +99,7 @@ public class UserController {
 	}
 
 	// Will return a list of user with given Page and limit in Request Params
-	// Page 0 means first page each page will contain 25 recorde if we specify page
+	// Page 0 means first page each page will contain 25 record if we specify page
 	// 1 record will
 	// Start with 26
 	@GetMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -111,15 +118,25 @@ public class UserController {
 		return returnValue;
 
 	}
-	
+
 	// Return address of a user of particular id
 	// localhost:8080/mobile-app-ws/users/{id}/addresses
-	@GetMapping(path = "/{id}/addresses", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+
+	@GetMapping(path = "/{id}/addresses", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE })
 	public List<AddressesRest> getUserAddresses(@PathVariable String id) {
 		List<AddressesRest> returnValue = new ArrayList<>();
+      //  System.out.println(id); 
+		List<AddressDto> addressesDto = addressesService.getAddress(id);
 
-		UserDto userDto = userService.getUserByUserId(id);
-		BeanUtils.copyProperties(userDto, returnValue);
+		ModelMapper modelMapper = new ModelMapper();
+		// To map list at once uses java.lang.reflect.Type;
+		// see in modelmapper user manual generics
+		if (addressesDto != null && !addressesDto.isEmpty()) {
+			Type listType = new TypeToken<List<AddressesRest>>() {
+			}.getType();
+			returnValue = modelMapper.map(addressesDto, listType);
+		}
 		return returnValue;
 	}
 
