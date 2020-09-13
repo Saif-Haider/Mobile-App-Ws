@@ -1,6 +1,9 @@
 package com.haider.app.ws.ui.model.response;
 
-public class AddressesRest {
+import org.springframework.hateoas.ResourceSupport;
+
+// ResourceSupport for HateOs
+public class AddressesRest extends ResourceSupport{
 	private String addressId; 
 	private String city;
 	private String country;
